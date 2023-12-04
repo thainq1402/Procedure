@@ -1,0 +1,1 @@
+UPDATE Stg_ThongTin 
