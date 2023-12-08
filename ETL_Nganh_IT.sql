@@ -5,7 +5,12 @@ BEGIN
 	/*Procedure ETL Nganh: 
 		1. Set ID_Nganh của các công việc CHỨA các keyword không liên quan đến IT
 		2. Set ID_Nganh của các công việc KHÔNG CHỨA keyword liên quan đến IT
+		3. Sau khi lọc xong các công việc không liên quan tới IT và set ID_Nganh của các công việc đó bằng 6 
+		ta sẽ set các ID_Nganh còn lại bằng 2 -- Ngành IT
+		Note : Dùng các keyword trong PROCEDURE ETL_NganhCon (Phân loại IT vào các ngành con) để đưa vào  phần 1 ngay dưới đây
+
   	*/
+	-- Phần 1
     update Stg_ThongTin
     set ID_Nganh = 6 
     where 
@@ -26,7 +31,8 @@ BEGIN
 
 --
 		 or lower(TenCV) like '%lập trình%'
-		 or TenCV like '%Front-end%'
+		 or TenCV like '%Front%'
+		 or TenCV like 'Front%'
 		 or TenCV like '%Devops%'
 		 or TenCV like '%Mobile Developer%'
 		 or TenCV like '%Product Development%'
@@ -41,9 +47,12 @@ BEGIN
 		or TenCV like '%ứng dụng%'
 		or TenCV like '%Cloud%'
 		or TenCV like '%Test%'
+		or TenCV like 'QA %'
 		or TenCV like '%Business Analyst%'
+		or TenCV like '%Business Analyst'
 		or TenCV like '%BA%'
 		or TenCV like '%Công nghệ thông tin%'
+		or TenCV like '%ABAP%'
 --
 		or TenCV like '%Solution%'
 		or TenCV like '%Hệ thống%'
@@ -55,9 +64,9 @@ BEGIN
 		or TenCV like '%AI%'
 		or TenCV like '%Analy%'
 		or TenCV like '%Intelligence%'
+		or TenCV like '% Data %'
 		or TenCV like '%Data%'
-	)
-	and ID_Nganh = 2;
+	);
 
 	update Stg_ThongTin
 	set ID_Nganh = 6 
@@ -147,6 +156,29 @@ BEGIN
 		 or TenCV like '%Kế toán%'
 		 or TenCV like 'Kế toán%'
 		 or TenCV like 'Giảng viên%'
-	)
-and ID_Nganh = 2;
+		 or TenCV like 'Bác sỹ %'
+		 or TenCV like '%Shop%'
+		 or TenCV like 'tài xế%'
+		 or TenCV like '%Retail%'
+		 or TenCV like '%Medical%'
+		 or TenCV like '%Wood%'
+		 or TenCV like '%Draw%'
+		 or TenCV like '%AutoCAD%'
+		 or TenCV like '%TikTok%'
+		 or TenCV like 'Litigation %'
+		 or TenCV like '%Invest%'
+		 or TenCV like '%trưng bày'
+		 or TenCV like 'IE Engineer'
+		 or TenCV like '% Đăng ký'
+		 or TenCV like '%Purchas%'
+		 or TenCV like 'Mechanical%'
+		 or TenCV like '%Pháp lý%'
+		 or TenCV like '%Chi tiêu%'
+		 or TenCV like '% HR %'
+		 or TenCV like 'Main%'
+		 or TenCV like '%Giám định%'
+		 or TenCV like '%Thẩm định%'
+		 or TenCV like '%bank%'
+		 	
+			);
 END
