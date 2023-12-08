@@ -1,4 +1,4 @@
-CREATE DEFINER=`dulieutu`@`%` PROCEDURE `ETL_Nganh_IT`()
+CREATE DEFINER=` tuyendungUser`@`%` PROCEDURE `ETL_Nganh_IT`()
 BEGIN
 	/*Procedure này sẽ update ID_Nganh của các công việc không
     v2.0 2023.11.15*/
