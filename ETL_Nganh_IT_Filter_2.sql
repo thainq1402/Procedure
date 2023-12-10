@@ -3,11 +3,10 @@ BEGIN
 /*Procedure này sẽ update ID_Nganh của các công việc không
     v2.0 2023.11.15*/
 	/*Procedure ETL Nganh: 
+    Filter 2 sử dụng các keyword trong TenCV để loại bỏ các công việc không liên quan 
 		1. Set ID_Nganh của các công việc CHỨA các keyword không liên quan đến IT
 		2. Set ID_Nganh của các công việc KHÔNG CHỨA keyword liên quan đến IT
 		3. Sau khi lọc xong các công việc không liên quan tới IT và set ID_Nganh của các công việc đó bằng 6 
-		ta sẽ set các ID_Nganh còn lại bằng 2 -- Ngành IT
-		Note : Dùng các keyword trong PROCEDURE ETL_NganhCon (Phân loại IT vào các ngành con) để đưa vào  phần 1 ngay dưới đây
   	*/
 	-- Phần 1    
 	update Stg_ThongTin
@@ -69,7 +68,7 @@ BEGIN
 		or TenCV like '% Data %'
 		or TenCV like 'Data%'
 	)
-	WHERE ID_Nganh is NULL;
+	AND ID_Nganh_Temp = 2;
 
 	update Stg_ThongTin
 	set ID_Nganh = 6 
@@ -195,7 +194,8 @@ BEGIN
 		 or TenCV like '% Nợ %'
 		 or TenCV like '% lái %' -- lái xe
 		 or TenCV like '% Nợ %'
-		);
+		)
+        AND ID_Nganh_Temp = 2;
 END
 
 

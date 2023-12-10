@@ -1,0 +1,36 @@
+1. Phân loại vào 3 ngành 
+    + IT
+    + Khác IT 
+    + IT Chưa phân loại 
+3 thao tác trên được thực hiện trên cột ID_Nganh 
+    + IT để nguyên để phân loại vào các ngành con 
+    + Khác IT  
+        - quy tắc chung gán ID_Nganh = 6 
+        - Filter qua NganhCon trên Web và TenCV
+            * Chi tiết: 
+                B1: sử dụng NganhCon để lọc các công việc ID_NganhCon = null set các 
+                ID_Nganh = 6  
+                Vấn đề: Thiết kế Dim_Nganh các kiểu 
+                0 - IT chưa phân loại 
+                2 - IT 
+                6 - Ngành khác IT 
+    + IT chưa phân loại 
+        B1: Gán các công việc chưa có ID_Nganh = 0 // IT Chưa phân loại 
+        B1: Chạy procedure phân loại vào các ngành con 
+        
+    + Thiết kế lại các bảng Dim_ViTri, Dim_Nganh, Dim_NganhCon
+
+    Về phần Nganh chỉ có 2 loại  
+        + 1 là IT (2), 2 là ngành khác (6), Chưa phân loại (0)
+        + Lọc lần 1: sau khi chạy procedure để lọc ra 2 Loại
+            + 1 là IT (2)
+            + 2 là Ngành khác (6)
+            + Sẽ gán ID_Nganh_Temp = (2) where ID_Nganh_Temp = null => Sau Filer 1 ta đã có các 
+            ngành thuộc IT (Nhưng chưa phân loại) => Bước 2 lọc theo TenCV
+
+            Sau khi lọc 1 lần xong lần sau chỉ cần chạy các ID_Nganh_Temp is Null.
+    IT chưa phân loại chỉ có thể là ngành con 
+
+
+
+    Chạy procedure phân loại theo TenCV
