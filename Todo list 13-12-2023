@@ -1,0 +1,21 @@
+1. Xem lại phần ETL Ngành, Ngành Con, Vị Trí 
+    - Đổ lại dữ liệu: 
+        + Xem lại lỗi cột Date - Done 
+    - ETL Ngành:
+        + Xây dựng bảng mapping ngành của các web 
+            - Select distinct các Ngành và Web ở bảng Stg_ThongTin - DONE
+                . Bảng này sẽ gồm có Nganh_Web, Web, ID_Nganh
+                    -- Nganh_Web là các ngành thô ở trong bảng Stg_ThongTin cần phân loại 
+                    -- Web là nguồn dữ liệu 
+                    -- ID_Nganh: Phân loại các Ngành Web vào các ngành ở trong bảng Dim_Nganh 
+            - Phân loại các ngành đó vào các Ngành ở bảng Dim_Nganh - DONE 
+            - Viết procedure kết nối để set ID_Nganh vào bảng Stg_ThongTin - DONE
+    - ETL Ngành Con:
+        + Ngành Con IT:
+        + Set các ngành con của các ngành khác là gì ?
+    - ETL Vị trí:
+        + Xem lại procedure về ETL Vị trí của các công việc IT 
+            Nội dung để nắm lại công việc đang làm 
+    - ETL Lương:
+    - ETL Cấp bậc:
+

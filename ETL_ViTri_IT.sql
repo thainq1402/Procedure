@@ -1,11 +1,9 @@
-CREATE DEFINER=`dulieutu`@`%` PROCEDURE `ETL_ViTri_IT`()
-/*Procedure sẽ cập nhật cột Vị Trí trong bảng Stg_ThongTin dựa trên ID_ViTri
-Thực hiện: Nguyễn Quốc Thái */
-
+CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_ViTri_IT`()
 BEGIN
     UPDATE Stg_ThongTin 
     SET ViTri = 
         CASE 
+			When ID_ViTri = 0 then 'IT Khác'
             WHEN ID_ViTri = 1 Then 'FrontEnd'
             WHEN ID_ViTri = 2 Then 'BackEnd'
             WHEN ID_ViTri = 3 Then 'Software Developer/Engineer'
@@ -21,7 +19,8 @@ BEGIN
             WHEN ID_ViTri = 13 Then 'Data Engineer'
             WHEN ID_ViTri = 14 Then 'IT Helpdesk'
             WHEN ID_ViTri = 15 Then 'Developer Game'
+            WHEN ID_ViTri = 16 Then 'Ngành Khác IT'
         ELSE ViTri
-        END
-    WHERE ID_Nganh = 2;
+        END;
+        -- where ID_Nganh = 2;
 END

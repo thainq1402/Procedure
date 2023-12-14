@@ -1,5 +1,6 @@
-CREATE DEFINER=`dulieutu`@`%` PROCEDURE `ETL_ID_ViTri_IT`()
+CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_ID_ViTri_IT`()
 BEGIN
+-- Update các công việc liên quan đến IT
 	update Stg_ThongTin 
     set ID_ViTri = 
 		case 
@@ -32,7 +33,7 @@ BEGIN
 		when TenCV like '%bảo hành%' then 14
 		when TenCV like '%technical%' then 14
 		when TenCV like '%Mạng máy tính%' then 14
-        	when TenCV like '%IT Staff%' then 14
+		when TenCV like '%IT Staff%' then 14
 		when TenCV like '%Infrastructure%' then 14
 		when TenCV like '%Service%' then 14
 		when TenCV like '%hạ tầng%' then 14
@@ -321,8 +322,6 @@ set ID_ViTri =
         end
 where ID_Nganh = 2 ;
 
-
-
 update Stg_ThongTin 
 set ID_ViTri = 
         case 
@@ -333,4 +332,11 @@ set ID_ViTri =
 		else ID_ViTri 
         end
 where ID_Nganh = 2 ;
+
+update Stg_ThongTin 
+set ID_ViTri = 16
+where ID_Nganh != 2;
+
+
+
 END

@@ -1,4 +1,4 @@
-CREATE DEFINER=`dulieutu`@`%` PROCEDURE `ETL_TrangThaiTrungLap`()
+CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_TrangThaiTrungLap`()
 /*Procedure đếm số lượng tin trùng nhau (group by theo Tên công việc, Công Ty, TinhThanh)
 Thực hiện: Nguyễn Quốc Thái */
 

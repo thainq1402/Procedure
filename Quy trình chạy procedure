@@ -1,0 +1,7 @@
+1.ETL Ngành IT - Lọc ra các công việc không thuộc IT 
+    - ETL_Nganh_IT_Filter_1
+    - ETL_Nganh_IT_Filter_2
+2.ETL Phân loại vào các ngành con trong IT
+    - Chạy procedure phân vị ID trí trước 
+    - Chạy procedure để update vị trí
+    - Chạy procedure phân vào ngành con sau 

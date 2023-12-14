@@ -11,7 +11,7 @@ BEGIN
     
     
     update Stg_ThongTin 
-	set ID_Nganh_Temp = 6 
+	set ID_Nganh = 6 
     where 
 	(
          -- Nganh keyword
@@ -97,7 +97,7 @@ BEGIN
          or Nganh like 'Khác' -- Ngành khác 10
         );
     UPDATE Stg_ThongTin 
-    SET ID_Nganh_Temp = 2 
-    WHERE ID_Nganh_Temp IS NULL;
+    SET ID_Nganh = 2 
+    WHERE ID_Nganh IS NULL;
     
 END

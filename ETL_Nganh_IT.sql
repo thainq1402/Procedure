@@ -1,79 +1,16 @@
 CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_Nganh_IT`()
 BEGIN
 /*Procedure này sẽ update ID_Nganh của các công việc không
-    v2.0 2023.11.15*/
+    v2.2 2023.12.12*/
 	/*Procedure ETL Nganh: 
-		1. Set ID_Nganh của các công việc CHỨA các keyword không liên quan đến IT
-		2. Set ID_Nganh của các công việc KHÔNG CHỨA keyword liên quan đến IT
-		3. Sau khi lọc xong các công việc không liên quan tới IT và set ID_Nganh của các công việc đó bằng 6 
-		ta sẽ set các ID_Nganh còn lại bằng 2 -- Ngành IT
-		Note : Dùng các keyword trong PROCEDURE ETL_NganhCon (Phân loại IT vào các ngành con) để đưa vào  phần 1 ngay dưới đây
+		1. Lọc các công việc không thuộc IT
+		2. Lấy lại những công việc bị phân loại ngoài ngành IT nhưng thực chất là của IT 
   	*/
-	-- Phần 1    
-	update Stg_ThongTin
-    set ID_Nganh = 6 
-    where 
-	not (
-		 TenCV like '%IT%'
-		or TenCV like '%Technical%'
-		or TenCV like '%desk%'	
-		or TenCV like '%Architect%'
-		or TenCV like '%CNTT%'		
-		or TenCV like '%Dữ liệu%'
-		or TenCV like '%Java%'
-		or TenCV like '%Engineer%'
-		or TenCV like '%Kuberrnets%'
-		or TenCV like '%Docker%'
-		or TenCV like '%.Net%'
-		or TenCV like '%Back%'
-		or TenCV like '%Python%'
-
---
-		 or lower(TenCV) like '%lập trình%'
-		 or TenCV like '%Front%'
-		 or TenCV like 'Front%'
-		 or TenCV like '%Devops%'
-		 or TenCV like '%Mobile Developer%'
-		 or TenCV like '%Product Development%'
-		 or TenCV like '%Dev%'
-		 or TenCV like '%Fullstack%'
-		 or TenCV like '%FullStack%'
-		 or TenCV like '%Unity%'
-		 or TenCV like '%WordPpress%'
-		  or TenCV like '%PHP %'
---
-		or TenCV like '%Software%'
-		or TenCV like '%ERP%'
-		or TenCV like '%Phần mềm%'
-		or TenCV like '%ứng dụng%'
-		or TenCV like '%Cloud%'
-		or TenCV like '%Test%'
-		or TenCV like 'QA %'
-		or TenCV like '%QC%'
-		or TenCV like '%Business Analyst%'
-		or TenCV like '%Business Analyst'
-		or TenCV like '%BA%'
-		or TenCV like '%Công nghệ thông tin%'
-		or TenCV like '%ABAP%'
---
-		or TenCV like '%Solution%'
-		or TenCV like '%Hệ thống%'
-		or TenCV like '%bảo mật%'
-		or TenCV like '%security%'
-		or TenCV like '%hạ tầng%'
-		or TenCV like '%quản trị mạng%'
---
-		or TenCV like '%AI%'
-		or TenCV like '%Analy%'
-		or TenCV like '%Intelligence%'
-		or TenCV like '% Data %'
-		or TenCV like 'Data%'
-	)
-	WHERE ID_Nganh is NULL;
-
+	/*1. Lọc các công việc không thuộc IT từ phần lọc thô*/ 
 	update Stg_ThongTin
 	set ID_Nganh = 6 
-	where 
+	where ID_Nganh = 2 
+	AND
 	(
 		TenCV like '%CALL%'
 		 or TenCV like '%Video%'
@@ -196,6 +133,71 @@ BEGIN
 		 or TenCV like '% lái %' -- lái xe
 		 or TenCV like '% Nợ %'
 		);
+
+
+	/*2. Lấy lại những công việc bị phân loại ngoài ngành IT nhưng thực chất là của IT */
+
+	update Stg_ThongTin
+    set ID_Nganh = 2
+    where ID_Nganh = 6
+	AND
+		(
+		 TenCV like '%IT%'
+		or TenCV like '%Technical%'
+		or TenCV like '%desk%'	
+		or TenCV like '%Architect%'
+		or TenCV like '%CNTT%'		
+		or TenCV like '%Dữ liệu%'
+		or TenCV like '%Java%'
+		or TenCV like '%Engineer%'
+		or TenCV like '%Kuberrnets%'
+		or TenCV like '%Docker%'
+		or TenCV like '%.Net%'
+		or TenCV like '%Back%'
+		or TenCV like '%Python%'
+
+--
+		 or lower(TenCV) like '%lập trình%'
+		 or TenCV like '%Front%'
+		 or TenCV like 'Front%'
+		 or TenCV like '%Devops%'
+		 or TenCV like '%Mobile Developer%'
+		 or TenCV like '%Product Development%'
+		 or TenCV like '%Dev%'
+		 or TenCV like '%Fullstack%'
+		 or TenCV like '%FullStack%'
+		 or TenCV like '%Unity%'
+		 or TenCV like '%WordPpress%'
+		  or TenCV like '%PHP %'
+--
+		or TenCV like '%Software%'
+		or TenCV like '%ERP%'
+		or TenCV like '%Phần mềm%'
+		or TenCV like '%ứng dụng%'
+		or TenCV like '%Cloud%'
+		or TenCV like '%Test%'
+		or TenCV like 'QA %'
+		or TenCV like '%QC%'
+		or TenCV like '%Business Analyst%'
+		or TenCV like '%Business Analyst'
+		or TenCV like '%BA%'
+		or TenCV like '%Công nghệ thông tin%'
+		or TenCV like '%ABAP%'
+--
+		or TenCV like '%Solution%'
+		or TenCV like '%Hệ thống%'
+		or TenCV like '%bảo mật%'
+		or TenCV like '%security%'
+		or TenCV like '%hạ tầng%'
+		or TenCV like '%quản trị mạng%'
+--
+		or TenCV like '%AI%'
+		or TenCV like '%Analy%'
+		or TenCV like '%Intelligence%'
+		or TenCV like '% Data %'
+		or TenCV like 'Data%'
+	);
+
 END
 
 
