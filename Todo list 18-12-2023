@@ -1,0 +1,17 @@
+1. Check lại todo list ngày gần nhất 
+2. ETL phần kinh nghiệm 
+    Xoáy 1: Làm Dashboard phần ETL KinhNghiem để monitor 
+        + kinh nghiệm theo cấp bậc, 
+    Xoáy 2: Viết procedure để tách kinh nghiệm 
+        + Tạo thêm 1 cột KinhNghiemETL - Done
+        + Đổ toàn bộ cột KinhNghiem sang cột KinhNghiemETL - Done
+        + Update KinhNghiem = 0 or Null group by theo ID_CapBac,ID_NganhCon
+        + Kinh Nghiệm Min > Kinh Nghiệm Max
+    Xoáy 3: Xử lý các phần null 
+ => Tất cả phải làm trong 1 tiếng
+3. Thêm phần xử lý Lương cho trường hợp có dấu chấm - Chưa xong
+4. Bổ sung thêm monitor của Kinh nghiệm 
+    + lỗi biên > Max(KinhNghiemMax)
+    + Outliner : 
+    + Bất Thường : 
+        + Số lượng Luong Min > Luong TB

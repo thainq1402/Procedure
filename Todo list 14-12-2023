@@ -1,0 +1,33 @@
+1. Vấn đề đang gặp phải 
+    + Vẫn còn 13k CV chưa có ID_Nganh 
+        - Giải quyết:
+            Bước 1: Liệt kê các Procedure set ID_Nganh 
+                    Chức năng lọc Ngành IT có 1 bước 
+                        Bước 1: Lọc thô, sử dụng các ngành ở web để lọc 
+                             + Có thể do lỗi là chưa đủ ngành 
+                             + Câu lệnh:
+                                'select Nganh from Stg_ThongTin t1
+                                left join Stg_NganhMap t2 on t1.Nganh = t2.Nganh_Web
+                                where t2.Nganh_Web  is null;'
+                                'select count(distinct(Nganh)) from Stg_ThongTin;
+
+                                select count(distinct(Nganh_Web)) from Stg_NganhMap;'
+                                Tổng có 2053 Ngành ở cả 2 bảng
+                                -> Không có Ngành nào chưa có trong bảng Stg_NganhMap 
+
+                        Bước 2: Lọc tinh, sử dụng Keyword ở TenCV để
+                             + Có thể do lỗi chưa đủ keyword cần nâng cấp 
+                             + Chưa có update các CV có ID_Nganh = null vào phần ngành khác
+
+
+                    Vấn đề: Còn nhiều ngành có ID_Nganh = Null tức là:
+                        + chưa được phân loại vào Ngành trong bảng Stg_NganhMap 
+                        + Không có phần nào set các CV mà có ID_Nganh Null 
+                    Suy luận: 
+                        + Sau khi chạy procedure ETL_ID_Nganh() phần còn lại sẽ là các CV có ID_Nganh = 6 hoặc ID_Nganh = null
+                        + Mục đích của câu lệnh ETL_ID_Nganh để phân loại các công việc mới đổ vào DB 
+                        + Vậy sau khi chạy xong các công việc còn lại sẽ thuộc vào NGÀNH KHÁC 
+                            -> Xử lý: Thêm 1 câu lệnh update các ngành có ID_Nganh là NULL join với bảng Stg_NganhMap 
+                            -> Giải quyết đc tình trạng có ID_Nganh là null
+            Bước 2: Xem các Nganh trong bảng Stg_ThongTin đã có trong
+         

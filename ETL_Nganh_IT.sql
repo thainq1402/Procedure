@@ -17,12 +17,16 @@ BEGIN
 		 or TenCV like '%Chăm sóc%'
 		 or TenCV like '%Điều hoà%'
 		 or TenCV like '%máy móc%'
+		 or TenCV like '%máy đúc%'
 		 or TenCV like '%Tư Vấn %'
 		 or TenCV like '%Dịch Vụ%'
 		 or TenCV like '%Human%'
 		 or TenCV like '%Khách Hàng%'
 		 or TenCV like '%MARKETING%'
+		 or TenCV like '%Digital%'
+		 or TenCV like '%Kỹ sư ATE%'
 		 or TenCV like '%bảo vệ%'
+		 or TenCV like '%hành chính%'
 		 or TenCV like '%Cơ Điện %'
 		 or TenCV like '%Digital %'
 		 or TenCV like '%TRUYỀN THÔNG%'
@@ -64,6 +68,7 @@ BEGIN
 		 or TenCV like '%tái bảo hiểm%'
 		 or TenCV like '% bán hàng %'
 		 or TenCV like 'bán hàng %'
+		 or TenCV like '%bán hàng %'
 		 or TenCV like '% bán hàng'
 		 or TenCV like '%SEO%'
 		 or TenCV like '%waitstaff%'
@@ -136,7 +141,6 @@ BEGIN
 
 
 	/*2. Lấy lại những công việc bị phân loại ngoài ngành IT nhưng thực chất là của IT */
-
 	update Stg_ThongTin
     set ID_Nganh = 2
     where ID_Nganh = 6
@@ -197,7 +201,8 @@ BEGIN
 		or TenCV like '% Data %'
 		or TenCV like 'Data%'
 	);
-
+	-- Các CV sau 2 lần lọc không thuộc ngành nào sẽ được cho vào ngành IT Khác
+		update Stg_ThongTin 
+        set ID_Nganh = 6 
+        where ID_Nganh is null;
 END
-
-

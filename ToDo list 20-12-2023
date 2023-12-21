@@ -1,0 +1,8 @@
+1. Xem lại ngành,ngành con,vị trí
+    - Set lại các vị trí và ngành con sai 
+    - Bước 1: Dùng view để kết nối các bảng Nganh, NganhCon, Vi Tri 
+    - Bước 2: Xem lại các procedure 
+    - Bước 3: Chuẩn hoá  
+2. Làm CapBac mapping 
+3. Làm Ngành Map 
+4. CapBac Map

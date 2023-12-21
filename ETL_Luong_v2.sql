@@ -40,10 +40,6 @@ BEGIN
             LuongTB  = LuongTB  * 0.024
 		where ID_Nganh = 2 and LuongTB between 350 and 10000;
 
--- Bước cuối: Set những bản ghi có LuongMin,Max,TB = 0.0 thành 'Thoả thuận'
-	update Stg_ThongTin_v1
-    set 
-		LuongTB = 'Thoả thuận'
-	where ID_Nganh = 2 and LuongTB = 0.0;
+
         
 END

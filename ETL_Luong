@@ -1,0 +1,91 @@
+CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_Luong`()
+BEGIN
+	/*v3.0 2023.12.16
+- Cập nhật thêm ETL Lương theo ngành*/
+-- Bước 1: ETL ( Loại bỏ những thành phần không phải số )
+update Stg_ThongTin set LuongETL = Luong;
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'Lên đến','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'Lên tới','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'Tới','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'Dưới','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'Từ','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'Trên','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,',','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'.','');/*bị nhầm phần Lương 1.5 triêu => 15 triệu*/
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'"','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'VND','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'USD','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'IDR','');
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'$','');
+	
+        
+-- Bước 2: Sử dụng cast và substring để tách ra min max và lương trung bình
+	update ignore Stg_ThongTin
+    set 
+		LuongMin = cast(substring_index(LuongETL,'-',1) as Decimal(12,2)),
+        LuongMax = cast(substring_index(LuongETL,'-',-1) as Decimal(12,2)),
+        LuongTB = (LuongMin+LuongMax)/2;
+
+-- Bước 3: Xử lý các trường hợp 12000000-23000000
+		update ignore Stg_ThongTin
+		set 
+			LuongMin = LuongMin * 0.000001,
+			LuongTB  = LuongTB  * 0.000001,
+			LuongMax = LuongMax * 0.000001
+		where (LuongMax >= 1000000 or LuongMin >= 1000000);
+-- Bước 4: Xử lý Luong USD 
+	-- Note: Lương USD thường chỉ nằm trong khoảng từ 350 - > 10000 (mười nghìn đô - level khá ok) nên
+    -- nhân LuongMin,LuongMax,LuongTB với 0.024 - tỷ giá đô hiện tại 
+		update ignore Stg_ThongTin
+        set 
+			LuongMin = LuongMin * 0.024,
+            LuongMax = LuongMax * 0.024,
+            LuongTB  = LuongTB  * 0.024
+		where Luong like '%USD%' or Luong like 'USD%' or Luong like '%USD' 
+			or Luong like '%$%' or Luong like '$%' or Luong like '%$' ;
+-- Bước 5: Xử lý nhiễu 
+
+-- Cập nhật LuongMin, LuongMax của những tin tuyển dụng không có Lương theo TB Ngành Con,Cấp bậc,
+	UPDATE Stg_ThongTin t1
+	join (
+		SELECT AVG(LuongMin) as LuongMinTB,ID_NganhCon,ID_CapBac
+		FROM Stg_ThongTin t3
+		WHERE not (t3.Luong  = 'Thoả thuận' or t3.Luong = 'Cạnh tranh' or t3.Luong = ' '
+			or t3.Luong is null or t3.Luong = 'Thương lượng' or t3.LuongMin=0)
+		GROUP BY t3.ID_NganhCon,t3.ID_CapBac
+	)t2  on (t2.ID_NganhCon = t1.ID_NganhCon and t2.ID_CapBac = t1.ID_CapBac)
+	set t1.LuongMin = t2.LuongMinTB 
+	where (t1.Luong  = 'Thoả thuận' or t1.Luong = 'Cạnh tranh' or t1.Luong = ' '
+	or t1.Luong is null or t1.Luong = 'Thương lượng');
+--    --------------
+	UPDATE Stg_ThongTin t1
+	join (
+		SELECT AVG(LuongMax) as LuongMaxTB,ID_NganhCon,ID_CapBac
+		FROM Stg_ThongTin t3
+		WHERE not (t3.Luong  = 'Thoả thuận' or t3.Luong = 'Cạnh tranh' or t3.Luong = ' '
+			or t3.Luong is null or t3.Luong = 'Thương lượng' or t3.LuongMin=0)
+		GROUP BY t3.ID_NganhCon,t3.ID_CapBac
+	)t2  on (t2.ID_NganhCon = t1.ID_NganhCon and t2.ID_CapBac = t1.ID_CapBac)
+	set t1.LuongMax = t2.LuongMaxTB 
+	where (t1.Luong  = 'Thoả thuận' or t1.Luong = 'Cạnh tranh' or t1.Luong = ' '
+	or t1.Luong is null or t1.Luong = 'Thương lượng');
+    
+-- Cập nhật Lương min trong các trường hợp không có
+	update Stg_ThongTin set LuongMin = LuongMax/1.5  
+    where (Luong like 'Lên đến%'
+	or Luong like 'Lên tới%'
+    or Luong like 'Tới%'
+    or Luong like 'Dưới%')
+    and LuongMin = LuongMax;
+    update Stg_ThongTin set LuongMax= LuongMin*1.5  
+    where (Luong like 'Từ%'
+	or Luong like 'Trên%')
+    and LuongMin = LuongMax;
+-- Cập nhật Lương max = Luong Min trong trường hợp khuyết 1 trong hai bên
+	update Stg_ThongTin set LuongMax = LuongMin where LuongMax = 0;
+    update Stg_ThongTin set LuongMin = LuongMax where LuongMin = 0;
+
+-- Tính lại LuongTB bằng (LuongMin+LuongMax)/2
+	update Stg_ThongTin set LuongTB = (LuongMin + LuongMax)/2;
+
+END

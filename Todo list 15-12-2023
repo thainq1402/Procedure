@@ -1,0 +1,14 @@
+1. Các công việc cần làm 
+    + Procedure Ngành
+        Vấn đề: Còn các CCV đang có ID_Nganh là NULL
+    + Procedure Mapping Cấp bậc
+        + Bước 1: Tạo bảng Stg_CapBacMap 
+        + Bước 2: Đổ distinct CapBac từ Stg_ThongTin vào bảng Stg_CapBacMap
+        + Bước 3: Phân loại
+        + Bước 4: Viết procedure cập nhật
+    + Procedure Mapping LoaiHinh - DONE
+        + Bước 1: Tạo bảng Stg_LoaiHinhMap 
+        + Bước 2: Đổ hết distinct LoaiHinh và Web vào bảng Stg_LoaiHinhMap 
+        + Bước 3: Viết Procedure để join 2 bảng này lại và set ID_LoaiHinh 
+    + Procedure TinhThanh - DONE
+        + Bước 1: Tạo bảng 
