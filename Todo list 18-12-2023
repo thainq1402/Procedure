@@ -9,8 +9,8 @@
         + Kinh Nghiệm Min > Kinh Nghiệm Max
     Xoáy 3: Xử lý các phần null 
  => Tất cả phải làm trong 1 tiếng
-3. Thêm phần xử lý Lương cho trường hợp có dấu chấm - Chưa xong
-4. Bổ sung thêm monitor của Kinh nghiệm 
+3. Thêm phần xử lý Lương cho trường hợp có dấu chấm - Done
+4. Bổ sung thêm monitor của Kinh nghiệm - Done
     + lỗi biên > Max(KinhNghiemMax)
     + Outliner : 
     + Bất Thường : 

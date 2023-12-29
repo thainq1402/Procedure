@@ -13,6 +13,7 @@ BEGIN
 		when TinhThanh like 'Bắc Giang' then 4
 		when TinhThanh like '%Bắc Giang' then 4
 		when TinhThanh like 'Bắc Kạn' then 5
+		when TinhThanh like 'Bắc Cạn' then 5
 		when TinhThanh like 'Bắc Ninh' then 6
 		when TinhThanh like '%Bắc Ninh%' then 6
 		when TinhThanh like '%Bắc Ninh' then 6
@@ -42,6 +43,7 @@ BEGIN
 		when TinhThanh like 'Da Nang' then 15
 		when TinhThanh like 'Đắk Lắk' then 16
 		when TinhThanh like '%Đắk Lắk%' then 16
+		when TinhThanh like 'Dak Lak' then 16
 		when TinhThanh like 'Đắk Nông' then 17
 		when TinhThanh like '%Dak Nông' then 17
 		when TinhThanh like '%Đắk Nông%' then 17
@@ -58,6 +60,12 @@ BEGIN
 		when TinhThanh like 'Hà Nam' then 23
 		when TinhThanh like '%Hà Nam%' then 23
 		when TinhThanh like 'Hà Nội' then 24
+		when TinhThanh like 'Cầu giấy' then 24
+		when TinhThanh like '%Hai%' then 24
+		when TinhThanh like '%Ba đình%' then 24
+		when TinhThanh like '%Từ Liêm%' then 24
+		when TinhThanh like '%Tây Hồ%' then 24
+		when TinhThanh like '%Hoàng Mai%' then 24
 		when TinhThanh like '%Thanh Xuân%' then 24
 		when TinhThanh like '%Hà Nội%' then 24
 		when TinhThanh like 'Hà Tĩnh' then 25
@@ -126,6 +134,7 @@ BEGIN
 		when TinhThanh like 'Hồ Chí Minh' then 58
 		when TinhThanh like '%Đông Nam%' then 58
 		when TinhThanh like '%Bình Thạnh' then 58
+		when TinhThanh like '%Quan 1%' then 58
 		when TinhThanh like '%Chí Minh%' then 58
 		when TinhThanh like '%HCM%' then 58
 		when TinhThanh like 'Thủ Đức' then 58
@@ -152,6 +161,7 @@ BEGIN
 		when TinhThanh like '%Osaka%' then 64
 		when TinhThanh like '%Kyoto%' then 64
 		when TinhThanh like 'Quốc tế' then 64
-        else 0
+		when TinhThanh like 'Singapore' then 64
+        else 64
         end;
 END

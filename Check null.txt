@@ -1,0 +1,16 @@
+1. ID_TinhThanh - Done
+2. ID_Web - Done
+3. ID_CapBac - Done - số 8 : khác Phần này sẽ làm trong phần tinh chỉnh dữ liệu 
+4. ID_CongTy - Done
+    - 1 số công việc không có công ty -> set thành cập nhật sau -> set ID trong Dim_CongTy là 
+
+5. ID_LoaiHinh - Done
+    - Cập nhật lại procedure ID_LoaiHinh    
+        + insert các LoaiHinh chưa có trong Stg_LoaiHinhMap vào Stg_LoaiHinhMap
+6.1 ETL_Nganh_IT : Dùng các keyword ở TenCV để lọc tinh - Done
+6. ID_ViTri 
+    - Tất cả các CV đã có ID với ID_Nganh = 2
+7. ID_Nganh 
+    - Cần crawl lại Web CareerBuilder 
+8. ID_NganhCon 
+    - Done

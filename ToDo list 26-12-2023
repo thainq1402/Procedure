@@ -1,0 +1,34 @@
+1 số các vấn đề 
+List: 
+1. Dash NC-T200
+An toàn thông tin
+    - LuongTB các ngành theo cấp bậc Fresher và Lead/Priciple lương = 0 -- Done
+
+    - LuongTB theo năm kinh nghiệm 5 năm thấp nhất - Tạo dim Luong và Dim KinhNghiem
+
+    - Có blank - chưa làm Dim_KinhNghiem -> Làm theo 4 phân vị
+IOT 
+    - LuongTB theo năm kinh nghiệm -> Blank
+IT Helpdesk 
+    - LuongTB theo từng cấp bậc Mid-level = 0 - Done
+
+    - LuongTB theo năm kinh nghiệm 0-1 năm thấp hơn không yêu cầu
+
+2. Dash NC-T100 
+An toàn thông tin 
+    - LuongTB các ngành theo từng cấp bậc
+    - LuongTB các ngành theo từng năm kinh nghiệm
+3. Dash NC T300 
+    -LuongTB các ngành theo từng cấp bậc
+    - LuongTb theo năm kinh nghiệm Back end/BA
+    - Software Architect
+
+
+Monitoring ETL Lương:
+    1. Bổ sung procedure Luong: Cập nhật thêm trường hợp không có khi thay thế LuongMin or LuongMax bằng AVG
+
+NOTE: Làm Dim lương 
+    1. ETL lại Lương cho chuẩn 
+    2. Phân chia các khoảng lương
+    3. Viết procedure để gán cái ID_Luong
+

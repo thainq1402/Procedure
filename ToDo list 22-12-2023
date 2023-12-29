@@ -1,0 +1,11 @@
+1. Làm CapBac Map
+    - Các CV mà không có CapBac 
+2. Drop các công việc mà có KinhNghiem nhầm trường 
+3. Check lại các trường mà nó không có (Không phải là NULL)
+    - VD như TenCV không có 
+    - Cấp bậc không có  - để phần tinh chỉnh dữ liệu sẽ làm phần này 
+
+4. Check lại mapping ngành
+    - Stg_NganhMap
+5. Trang thai trung lap
+    - Error Code: 1055. Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 'ThongTinTuyenDung.Stg_ThongTin.ID' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by	0.000 sec
