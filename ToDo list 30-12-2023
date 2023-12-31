@@ -1,0 +1,26 @@
+1. Sửa lại phần yêu cầu 
+    + Khảo sát lại các phần đấngi phần yêu cầu 
+        -> Xem xét sửa hastag or sửa phân loại phần hastag
+        -> Bổ sung thêm các hastag 
+            * Nhớ bổ sung vào cả 2 bảng là Stg_Hastag và Stg_NhomPhanLoaiYeuCau 
+-- KHẢO SÁT 
+    + Chỉnh sửa 
+        - Phần  chi tiết nhóm yêu cầu: OOP và lập trình hướng đối tượng là 1 - DONE
+        - Lập trình Front end = Lâp trình Web - DONE
+        - MySQL, SQL Server = 1 trong 2 cái - DONE
+        - Kubenetes : có phải Frame Work không 
+        - 
+    + Thêm mới hastag
+        - Chứng chỉ - An toàn thông tin - CEH, LPT, GIAC, CISSP, CCSP, CISA
+        - Công cụ - An toàn thông tin - OWASP 
+        - Kiến thức - An toàn thông tin - Web application Security
+        - Kiến thức - An toàn thông tin - ISMS
+        - 
+     Note bổ sung phải bổ sung tại 2 bảng Stg_Hastag và Stg_NhomPhanLoaiYeuCau
+2. Sửa lại các phần bị blank
+3. Vẽ lại dashboard
+4. Chuyển các ETL sang bảng Stg_ThongTinRaw
+    + Check lại 1 lần các ETL Nganh, ETL ViTri ....
+    + Ghép lại thành 1 procedure
+
+        

@@ -1,18 +1,14 @@
 CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_YeuCau`()
-SET NAMES utf8;
 BEGIN
+-- Bước 1: Lấy các ID có chứa các Hastag
+
 	declare done int default false;
     declare hastag_value varchar(50); 
     declare	cur cursor for select HastagName from Stg_Hastag; 
     declare continue handler for not found set done = true;
     
-    drop table if exists Stg_HastagChiTiet;
-    
-    create table Stg_HastagChiTiet(
-    ID int(11),
-    Hastag varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci);
-    
-    select 1;
+	TRUNCATE TABLE Stg_HastagChiTiet;
+
     
     open cur;
     read_loop: LOOP
@@ -23,12 +19,23 @@ BEGIN
 		end if;
         
         -- insert the match records into the temporary table 
-        insert ignore into Stg_HastagChiTiet (ID,Hastag)
+        insert ignore into Stg_HastagChiTiet (ID,HastagName)
         select ID, cast(hastag_value as CHAR CHARACTER set utf8mb4)
         from Stg_ThongTin
         where lower(YeuCau) like ConCat('%',lower(hastag_value),'%');
 	end loop;
     close cur;
+
+    -- Bước 2: Tạo mới bảng  Dim_YeuCau 
+	TRUNCATE TABLE Dim_YeuCau;
+    
+    insert into Dim_YeuCau 
+	select t1.ID,t4.NhomYeuCau ,t4.NhomPhanLoaiYeuCau, t4.ChiTietNhomYeuCau 
+	from (Stg_HastagChiTiet t1
+	join (
+	select * from Stg_Hastag t2 
+    join Stg_HasTagMappingYeuCau t3 using(HastagName)) t4 using (HastagName));
+
 END
 
 

@@ -1,53 +1,22 @@
 CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_ID_CapBac`()
 BEGIN
-	update Stg_ThongTin
-set ID_CapBac =
-	case 
-		-- Fresher
-		when CapBac like 'Sinh viên%' then 1
-		when CapBac like 'Thực tập sinh%' then 1
-		when CapBac like 'Cộng tác viên%' then 1
-        -- Junior
-		when CapBac like 'Mới đi làm%' then 2
-		when CapBac like 'Fresher%' then 2
-		when CapBac like 'Junior%' then 2
-        -- Junior
-		when CapBac like 'nhân viên%' then 3
-		when CapBac like 'kỹ thuật viên%' then 3
-		when CapBac like 'All levels%' then 3
-		when CapBac like 'chuyên viên%' then 3
-		when CapBac like 'nhân viên%' then 3
-		when CapBac like 'Junior%' then 3
-		-- Mid level
-		when CapBac like 'Giám sát%' then 4
-		when CapBac like 'Quản lý%' then 4
-		when CapBac like 'Quản lý%' then 4
-		when CapBac like 'Middle' then 4
-		when CapBac like 'Quản lý%' then 4
-		when CapBac like 'Quản lý%' then 4
-		when CapBac like 'Trưởng nhóm%' then 4
-		when CapBac like 'Trưởng nhóm%' then 4
-		when CapBac like 'Trưởng nhóm' then 4
-        else 0
-        end;
-	-- where ID_Nganh = 2;
+-- v2.0 22-12-2023 Nguyễn Quốc Thái
 
-update Stg_ThongTin 
-set ID_CapBac = 
-	case 
-		-- Senior
-		when CapBac like 'Trưởng/Phó phòng%' then 5
-		when CapBac like 'Senior%' then 5
-		when CapBac like 'Chuyên gia%' then 5
-        -- Lead/Principle
-		when CapBac like '%Lead%' then 6
-		when CapBac like '%cấp cao%' then 6
-        -- Project Manager
-		when CapBac like 'Giám đốc' then 7
-		when CapBac like 'Manager' then 7
-		when CapBac like 'PM' then 7
-		when CapBac like 'Giám đốc' then 7
-        else ID_CapBac
-        end;
-	-- where ID_Nganh = 2;
+-- Bước 1: Thực hiện Mapping
+update Stg_ThongTin t1
+join Stg_CapBacMap t2 on  ( t1.CapBac = t2.CapBacWeb and t1.Web = t2.Web)
+set t1.ID_CapBac = t2.ID_CapBac;
+
+-- Bước 2: Thực hiện xử lý các trường hợp không có cấp bậc theo năm kinh nghiệm
+
+UPDATE Stg_ThongTin t1
+JOIN Dim_KinhNghiem t2 ON t1.KinhNghiemTB BETWEEN t2.Min AND t2.Max
+SET t1.ID_CapBac = 
+    CASE 
+        WHEN t2.ID_KinhNghiem = 1 THEN 1
+        WHEN t2.ID_KinhNghiem = 2 THEN 2
+        ELSE t1.ID_CapBac
+    END
+WHERE t1.ID_CapBac = 8;
+
 END

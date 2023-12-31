@@ -27,7 +27,7 @@ BEGIN
 		when TinhThanh like '%Bình Định' then 9
 		when TinhThanh like '%Bình Định%' then 9
 		when TinhThanh like 'Bình Phước' then 10
-		when TinhThanh like '%Bình Phước%' then 10
+		when TinhThanh like '%Bình Phước%' then 10  
 		when TinhThanh like '%Bình Phước' then 10
 		when TinhThanh like 'Bình Thuận' then 11
 		when TinhThanh like '%Bình Thuận%' then 11
