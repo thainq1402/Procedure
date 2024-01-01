@@ -18,5 +18,4 @@ SET t1.ID_CapBac =
         ELSE t1.ID_CapBac
     END
 WHERE t1.ID_CapBac = 8;
-
 END
