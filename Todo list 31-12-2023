@@ -1,4 +1,7 @@
-1. Tinh chỉnh dữ liệu 
-    - An toàn thông tin
-        + Nhóm cấp bậc khác 
+Mục tiêu: Hoàn thành phần ETL cho cấp bậc khác và tinh chỉnh dữ liệu cho Dashboard LD-T100
 
+
+- Chú ý: check theo từng cấp bậc
+- Note: 
+    + Thêm 1 card là Số lượng tuyển dụng 
+    + Lương theo ID_KinhNghiệm

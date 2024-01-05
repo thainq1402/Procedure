@@ -20,6 +20,7 @@ update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'IDR','') ;
 update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'$','') ;
 update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'Upto','') ;
 update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'upto','') ;
+update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'to','-') ;
 update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'up to','') ;
 update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'Mức lương:   ','') ;
 update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'From','') ;
