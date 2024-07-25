@@ -7,7 +7,7 @@ BEGIN
 		2. Lấy lại những công việc bị phân loại ngoài ngành IT nhưng thực chất là của IT 
   	*/
 	/*1. Lọc các công việc không thuộc IT từ phần lọc thô*/ 
-	update Stg_ThongTin
+	update Stg_ThongTin_raw
 	set ID_Nganh = 6 
 	where ID_Nganh = 2 
 	AND
@@ -141,7 +141,7 @@ BEGIN
 
 
 	/*2. Lấy lại những công việc bị phân loại ngoài ngành IT nhưng thực chất là của IT */
-	update Stg_ThongTin
+	update Stg_ThongTin_raw
     set ID_Nganh = 2
     where ID_Nganh = 6
 	AND
@@ -202,7 +202,7 @@ BEGIN
 		or TenCV like 'Data%'
 	);
 	-- Các CV sau 2 lần lọc không thuộc ngành nào sẽ được cho vào ngành IT Khác
-		update Stg_ThongTin 
-        set ID_Nganh = 6 
+		update Stg_ThongTin_raw 
+        set ID_Nganh = 6, ID_NganhCon = 7, ID_ViTri = 70
         where ID_Nganh is null;
 END

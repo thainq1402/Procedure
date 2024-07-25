@@ -1,6 +1,6 @@
-CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_Luong`()
+CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_Luong_v1`()
 BEGIN
-	/*v3.0 2023.12.16
+	/*v3.0 2024.2.19
 - Cập nhật thêm ETL Lương theo ngành*/
 -- Bước 1: ETL ( Loại bỏ những thành phần không phải số )
 update Stg_ThongTin set LuongETL = Luong  WHERE LuongETL is NULL;
@@ -29,14 +29,13 @@ update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'đến','-') ;
 
 
 	
-        
 -- Bước 2: Sử dụng cast và substring để tách ra min max và lương trung bình
 	update ignore Stg_ThongTin
     set 
 		LuongMin = cast(substring_index(LuongETL,'-',1) as Decimal(12,2)),
         LuongMax = cast(substring_index(LuongETL,'-',-1) as Decimal(12,2)),
-        LuongTB = (LuongMin+LuongMax)/2
-	WHERE LuongTB is NULL;
+        LuongTB = (LuongMin+LuongMax)/2;
+	 -- WHERE LuongTB is NULL;
 
 -- Bước 3: Xử lý các trường hợp 12000000-23000000
 		update ignore Stg_ThongTin
@@ -58,39 +57,39 @@ update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'đến','-') ;
 			or Luong like '%$%' or Luong like '$%' or Luong like '%$' ;
 
 -- Bước 5: Xử lý nhiễu 
--- Cập nhật LuongMin, LuongMax của những tin tuyển dụng không có Lương theo TB Ngành Con,Cấp bậc,
-	UPDATE Stg_ThongTin t1
-	join (
-		SELECT AVG(LuongMin) as LuongMinTB,ID_NganhCon,ID_CapBac
-		FROM Stg_ThongTin t3
-		WHERE not (t3.Luong  = 'Thoả thuận' or t3.Luong = 'Cạnh tranh' or t3.Luong = ' '
-			or t3.Luong is null or t3.Luong = 'Thương lượng' or t3.LuongMin=0 
-			or t3.Luong like '%tranh%' or t3.Luong like '%thoa%' or t3.Luong like '%Cap%'
-			or t3.Luong like '%Thuong%' or t3.Luong like 'Negotiable' or t3.Luong like '0 - 0')
-		GROUP BY t3.ID_NganhCon,t3.ID_CapBac
-	)t2  on (t2.ID_NganhCon = t1.ID_NganhCon and t2.ID_CapBac = t1.ID_CapBac)
-	set t1.LuongMin = t2.LuongMinTB 
-	where (t1.Luong  = 'Thoả thuận' or t1.Luong = 'Cạnh tranh' or t1.Luong = ' '
-	or t1.Luong is null or t1.Luong = 'Thương lượng' or t1.Luong like  '%Cập nhật%' 
-	or t1.Luong = 'Không có' or t1.Luong like '%tranh%' or t1.Luong like '%thoa%' or t1.LuongMin = 0
-	or t1.Luong like '%Cap%' or t1.Luong like '%Thuong%' or t1.Luong like 'Negotiable' );
+-- Cập nhật LuongMin, LuongMax của những tin tuyển dụng không có Lương theo TB Vitri, Capbac, Kinhnghiem
+    UPDATE Stg_ThongTin t1
+    JOIN (
+        SELECT AVG(LuongMin) as LuongMinTB, ID_ViTri, ID_CapBac, ID_KinhNghiem
+        FROM Stg_ThongTin t3
+        WHERE NOT (t3.Luong  = 'Thoả thuận' OR t3.Luong = 'Cạnh tranh' OR t3.Luong = ' '
+			OR t3.Luong is null OR t3.Luong = 'Thương lượng' OR t3.LuongMin=0 
+			OR t3.Luong like '%tranh%' OR t3.Luong like '%thoa%' OR t3.Luong like '%Cap%'
+			OR t3.Luong like '%Thuong%' OR t3.Luong like 'Negotiable' OR t3.Luong like '0 - 0')
+        GROUP BY t3.ID_ViTri, t3.ID_CapBac, ID_KinhNghiem
+    ) t2 ON(t2.ID_ViTri = t1.ID_ViTri AND t2.ID_CapBac = t1.ID_CapBac AND t2.ID_KinhNghiem = t2.ID_KinhNghiem)
+    SET t1.LuongMin = t2.LuongMinTB
+    WHERE (t1.Luong  = 'Thoả thuận' OR t1.Luong = 'Cạnh tranh' OR t1.Luong = ' ' OR t1.Luong = ''
+	OR t1.Luong is null OR t1.Luong = 'Thương lượng' OR t1.Luong like  '%Cập nhật%' 
+	OR t1.Luong = 'Không có' OR t1.Luong like '%tranh%' OR t1.Luong like '%thoa%' OR t1.LuongMin = 0
+	OR t1.Luong like '%Cap%' OR t1.Luong like '%Thuong%' OR t1.Luong like 'Negotiable' );
 --    ---------------------
-	UPDATE Stg_ThongTin t1
-	join (
-		SELECT AVG(LuongMax) as LuongMaxTB,ID_NganhCon,ID_CapBac
-		FROM Stg_ThongTin t3
-		WHERE not (t3.Luong  = 'Thoả thuận' or t3.Luong = 'Cạnh tranh' or t3.Luong = ' '
-			or t3.Luong is null or t3.Luong = 'Thương lượng' or t3.LuongMax=0 
-			or t3.Luong like '%tranh%' or t3.Luong like '%thoa%' or t3.Luong like '%Cap%'
-			or t3.Luong like '%Thuong%' or t3.Luong like 'Negotiable' or t3.Luong like '0 - 0')
-		GROUP BY t3.ID_NganhCon,t3.ID_CapBac
-	)t2  on (t2.ID_NganhCon = t1.ID_NganhCon and t2.ID_CapBac = t1.ID_CapBac)
-	set t1.LuongMax = t2.LuongMaxTB 
-	where (t1.Luong  = 'Thoả thuận' or t1.Luong = 'Cạnh tranh' or t1.Luong = ' '
-	or t1.Luong is null or t1.Luong = 'Thương lượng' or t1.Luong like  '%Cập nhật%' 
-	or t1.Luong = 'Không có' or t1.Luong like '%tranh%' or t1.Luong like '%thoa%' or t1.LuongMax = 0
-	or t1.Luong like '%Cap%' or t1.Luong like '%Thuong%' or t1.Luong like 'Negotiable' );
-    
+    UPDATE Stg_ThongTin t1
+    JOIN (
+        SELECT AVG(LuongMax) as LuongMaxTB, ID_ViTri, ID_CapBac, ID_KinhNghiem
+        FROM Stg_ThongTin t3 
+        WHERE NOT (t3.Luong  = 'Thoả thuận' OR t3.Luong = 'Cạnh tranh' OR t3.Luong = ' '
+			OR t3.Luong is null OR t3.Luong = 'Thương lượng' OR t3.LuongMin=0 
+			OR t3.Luong like '%tranh%' OR t3.Luong like '%thoa%' OR t3.Luong like '%Cap%'
+			OR t3.Luong like '%Thuong%' OR t3.Luong like 'Negotiable' OR t3.Luong like '0 - 0')
+		 GROUP BY t3.ID_ViTri, t3.ID_CapBac, ID_KinhNghiem
+    ) t2 ON (t2.ID_ViTri = t1.ID_ViTri AND t2.ID_CapBac = t1.ID_CapBac AND t2.ID_KinhNghiem = t1.ID_KinhNghiem)
+    SET t1.LuongMax = t2.LuongMaxTB
+    WHERE (t1.Luong  = 'Thoả thuận' OR t1.Luong = 'Cạnh tranh' OR t1.Luong = ''
+	OR t1.Luong is null OR t1.Luong = 'Thương lượng' OR t1.Luong like  '%Cập nhật%' 
+	OR t1.Luong = 'Không có' OR t1.Luong like '%tranh%' OR t1.Luong like '%thoa%' OR t1.LuongMax = 0
+	OR t1.Luong like '%Cap%' OR t1.Luong like '%Thuong%' OR t1.Luong like 'Negotiable' );
+        
 -- Cập nhật Lương min trong các trường hợp không có
 	update Stg_ThongTin set LuongMin = LuongMax/1.5  
     where (Luong like 'Lên đến%'
@@ -109,7 +108,11 @@ update ignore Stg_ThongTin set LuongETL = replace(LuongETL,'đến','-') ;
 -- Cập nhật Lương max = Luong Min trong trường hợp khuyết 1 trong hai bên
 	update Stg_ThongTin set LuongMax = LuongMin where LuongMax = 0;
     update Stg_ThongTin set LuongMin = LuongMax where LuongMin = 0;
-
+-- Cập nhật lại khi LuongMin > LuongMax
+	update Stg_ThongTin t1 
+    join (select t2.ID, t2.LuongMin, t2.LuongMax from Stg_ThongTin t2
+		where LuongMin > LuongMax) t3 ON t3.ID = t1.ID
+	set t1.LuongMin = t3.LuongMax, t1.LuongMax = t3.LuongMin;
 -- Tính lại LuongTB bằng (LuongMin+LuongMax)/2
 	update Stg_ThongTin set LuongTB = (LuongMin + LuongMax)/2;
 

@@ -1,0 +1,9 @@
+1. Tạo bảng mới giống như bảng Stg_ThongTin_Raw - Đổ dữ liệu về ngành IT ra đó để ETL 
+    + ETL_IT_Data
+2. Đổ dữ liệu từ Stg_ThongTin_Raw ra đó 
+    + Số bản ghi trong bảng Stg_ThongTin_Raw: 468889
+    + Where Nganh = 'IT' : 39621 
+    + Where Nganh = 'Phan m%' :3750
+3. Xoá các bản ghi trong Stg_ThongTin_Raw
+3. Chạy ETL 
+4. Đổ lại vào bảng Fact

@@ -1,0 +1,23 @@
+1. Chỉnh sửa các Procedure sang bảng khác 
+2. Tạo bảng Fact
+    + tạo 1 bảng fact như sau:
+        - ID auto_increment PK
+        - SoLuong int(11)
+        - Link Varchar(300)
+        - ID_Nganh int(11)
+        - ID_NganhCon int(11)
+        - ID_ViTri int(11)
+        - ID_CapBac int(11)
+        - ID_LoaiHinh int(11)
+        - ID_Web int(11)
+        - ID_CongTy int(11)
+        - ID_TinhThanh int(11)
+        - ID_KinhNghiem int(11)
+        - TrangThaiTrungLap int(11)
+        - HanNopCVDate date
+        - KinhNghiemMin decimal(10,1)
+        - KinhNghiemMax decimal(10,1)
+        - KinhNghiemTB decimal(10,1)
+        - LuongMin decimal(10,1)
+        - LuongTB decimal(10,1)
+        - LuongMax decimal(10,1)

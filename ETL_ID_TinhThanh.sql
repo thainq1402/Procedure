@@ -1,6 +1,6 @@
 CREATE DEFINER=`tuyendungUser`@`%` PROCEDURE `ETL_ID_TinhThanh`()
 BEGIN
-	update Stg_ThongTin 
+	update Stg_ThongTin_raw
 	set ID_TinhThanh = 
 	case 
 		when TinhThanh like 'An Giang' then 1

@@ -13,7 +13,7 @@ BEGIN
 */
 -- Update các công việc liên quan đến vị trí: IT Helpdesk
  -- 14.IT helpdesk
-	update Stg_ThongTin 
+	update Stg_ThongTin_raw 
     set ID_ViTri = 14
     , ID_NganhCon = 5
 	where
@@ -84,7 +84,7 @@ BEGIN
 		or TenCV like '%filemaker%' 
 		or TenCV like '%fresher Engineer%' );
 -- 12. AI
-update Stg_ThongTin 
+update Stg_ThongTin_raw 
   set ID_ViTri = 12, ID_NganhCon = 4
 	where
 		ID_Nganh = 2
@@ -104,7 +104,7 @@ update Stg_ThongTin
         or TenCV like '%gis developer%' 
         or TenCV like '%AI Engineer%');
   -- 13.Data Engineer      
- update Stg_ThongTin 
+ update Stg_ThongTin_raw 
   set ID_ViTri = 13, ID_NganhCon = 4
 	where
 		ID_Nganh = 2
@@ -118,7 +118,7 @@ update Stg_ThongTin
 		or TenCV like '%AWS%' and TenCV not like '%back%' );
 
 	-- 2.Backend
-update Stg_ThongTin 
+update Stg_ThongTin_raw 
 set ID_ViTri = 2, ID_NganhCon = 1
 	where
 		ID_Nganh = 2
@@ -146,7 +146,7 @@ set ID_ViTri = 2, ID_NganhCon = 1
         or TenCV like '%cobol%'  );
  -- Phát triển phần mềm 
 			-- 1. Front end
-update Stg_ThongTin 
+update Stg_ThongTin_raw 
 set ID_ViTri = 1, ID_NganhCon = 1
 	where
 		ID_Nganh = 2
@@ -171,7 +171,7 @@ set ID_ViTri = 1, ID_NganhCon = 1
 		or TenCV like '%React%' 
         or TenCV like '%angular%'  );
 	-- 3.Software develop engineer
-update Stg_ThongTin 
+update Stg_ThongTin_raw 
 set ID_ViTri = 3, ID_NganhCon = 1
 	where
 		ID_Nganh = 2
@@ -215,7 +215,7 @@ set ID_ViTri = 3, ID_NganhCon = 1
 		or TenCV like '%appian%'  
 		or TenCV like '%quản trị phần mềm%' );
 -- 4.Software architect 
-update Stg_ThongTin 
+update Stg_ThongTin_raw 
 set ID_ViTri = 4, ID_NganhCon = 1
 	where
 		ID_Nganh = 2
@@ -224,7 +224,7 @@ set ID_ViTri = 4, ID_NganhCon = 1
 		or TenCV like '%Solution%'  );
 
 -- 5. QA/QC engineer    
- update Stg_ThongTin 
+ update Stg_ThongTin_raw 
 set ID_ViTri = 5, ID_NganhCon = 1
 	where
 		ID_Nganh = 2       
@@ -243,7 +243,7 @@ set ID_ViTri = 5, ID_NganhCon = 1
         or TenCV like '%automation%'  );
 
 -- 6.Project manager
- update Stg_ThongTin 
+ update Stg_ThongTin_raw 
 set ID_ViTri = 6, ID_NganhCon = 1
 	where
 		ID_Nganh = 2       
@@ -265,7 +265,7 @@ set ID_ViTri = 6, ID_NganhCon = 1
 		or TenCV like '%Financial Control%' 
 		or TenCV like '%TRƯỞNG PHÒNG%' );
 			-- 7."Business Analyst/Bridge Software Engineer
- update Stg_ThongTin 
+ update Stg_ThongTin_raw 
 set ID_ViTri = 7, ID_NganhCon = 1
 	where
 		ID_Nganh = 2       
@@ -290,7 +290,7 @@ set ID_ViTri = 7, ID_NganhCon = 1
         or TenCV like '%trợ lý dụ án %' ) ;
 
      -- 8.DevOps
- update Stg_ThongTin 
+ update Stg_ThongTin_raw 
 set ID_ViTri = 8, ID_NganhCon = 1
 	where
 		ID_Nganh = 2       
@@ -298,16 +298,16 @@ set ID_ViTri = 8, ID_NganhCon = 1
         or TenCV like '%Devop%' 
 		or TenCV like '%Cloud%' );
 			-- 9. Security 
-	 update Stg_ThongTin 
+	 update Stg_ThongTin_raw 
 set ID_ViTri = 9, ID_NganhCon = 2
 	where
 		ID_Nganh = 2       
 		and(TenCV like '%Bảo mật%'  
-		or TenCV like '%Security%'  
+		or TenCV like '%Security%'
         or TenCV like '%Securities%'  
         or TenCV like '% SOC %' );
 	-- 10.IOT 
-	 update Stg_ThongTin 
+	 update Stg_ThongTin_raw 
 set ID_ViTri = 10, ID_NganhCon = 3
 	where
 		ID_Nganh = 2       
@@ -322,7 +322,7 @@ set ID_ViTri = 10, ID_NganhCon = 3
 		or TenCV like '%C developer%' 
 		or TenCV like '%tự động hoá%' ) ;
 -- 11.Data Analyst 
- update Stg_ThongTin 
+ update Stg_ThongTin_raw 
 set ID_ViTri = 11, ID_NganhCon = 4
 	where
 		ID_Nganh = 2       
@@ -335,7 +335,7 @@ set ID_ViTri = 11, ID_NganhCon = 4
         or TenCV like '%Báo cáo BI%' 
         or TenCV like '%data analyst%' ) ;
 	-- 15.Game
- update Stg_ThongTin 
+ update Stg_ThongTin_raw 
 set ID_ViTri = 15, ID_NganhCon = 6
 	where
 		ID_Nganh = 2       
@@ -345,7 +345,7 @@ set ID_ViTri = 15, ID_NganhCon = 6
 		or TenCV like '%Roblox%' );
 
 -- Update các CV thuộc IT nhưng không được phân vào NganhCon or ViTri nào
-	update Stg_ThongTin 
+	update Stg_ThongTin_raw 
 	set ID_ViTri = 16,ID_NganhCon = 0 
 	where ID_Nganh = 2 and ID_ViTri is null;
 END

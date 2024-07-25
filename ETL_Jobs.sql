@@ -12,7 +12,7 @@ BEGIN
 		-- các Cv sẽ đc update các ID_ViTri và ID_NganhCon 
         /*2.2 ETL vị trí, ngành con cho ngành khác IT*/
 
-        update Stg_ThongTin s
+        update Stg_ThongTin_raw s
 		join  (Select v.ID_ViTri, v.ViTri, n.ID_NganhCon,  n.ID_Nganh from Dim_ViTri v, Dim_NganhCon n where v.ID_NganhCon = n.ID_NganhCon) t on s.ID_Nganh = t.ID_Nganh
 		set s.ID_NganhCon = t.ID_NganhCon
 		, s.ID_ViTri = t.ID_ViTri

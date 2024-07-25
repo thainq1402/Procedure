@@ -1,0 +1,19 @@
+1. Giải quyết phần Kinh Nghiêm trước rồi qua  Cấp bậc
+
+Mục tiêu: Muốn chuẩn hoá các Cấp bậc, kẹp Cấp bậc theo Kinh Nghiệm và Lương 
+
+1. Vấn đề: 
+    + KinhNghiệm có nhiều giá trị 0 
+        - Giải quyết: Cập nhật Min, trung bình, Max theo giá trị ID_CapBac và ID_ViTri cho các bản ghi có giá trị ID_CapBac = 8 theo bảng Fact_back_up
+        - Bước 1: Giá trị Min, Trung bình, Max theo cấp bậc, vị trí của bảng Fact_back_up 
+        - Bước 2: join với bảng ETL_IT_Data dựa trên ID_ViTri và ID_CapBac 
+        - Bước 3: Set KinhNghiemMin, KinhNghiemMax, KinhNghiemTB của bảng ETL_IT_Data
+ 
+update ETL_IT_Data t1
+join ( select t1.ID_CapBac, t1.ID_ViTri, avg(t1.KinhNghiemMin) KNMin, avg(t1.KinhNghiemTB) KNTB, avg( t1.KinhNghiemMax) KNMax 
+from Fact_back_up t1
+where t1.ID_CapBac !=8
+group by t1.ID_CapBac, t1.ID_ViTri) t2 on t1.ID_CapBac = t2.ID_CapBac and t1.ID_ViTri = t2.ID_ViTri
+set t1.KinhNghiemMin = t2.KNMin, t1.KinhNghiemTB = t2.KNTB, t1.KinhNghiemMax = t2.KNMax
+where t1.ID_CapBac is null or ID_CapBac = 8;
+
